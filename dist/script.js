@@ -32,11 +32,11 @@ document.addEventListener("keydown", (event) => {
 
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   intro?.classList.add("is-hidden");
-} else if (sessionStorage.getItem("yashoIntroSeenV2")) {
+} else if (sessionStorage.getItem("yashoIntroSeenV3")) {
   intro?.classList.add("is-hidden");
 } else {
-  sessionStorage.setItem("yashoIntroSeenV2", "true");
-  window.setTimeout(() => intro?.classList.add("is-hidden"), 2200);
+  sessionStorage.setItem("yashoIntroSeenV3", "true");
+  window.setTimeout(() => intro?.classList.add("is-hidden"), 2850);
 }
 
 const observer = new IntersectionObserver(
