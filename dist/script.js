@@ -1,13 +1,16 @@
 const header = document.querySelector("[data-header]");
+const hero = document.querySelector(".hero");
 const menuButton = document.querySelector("[data-menu-button]");
 const mobilePanel = document.querySelector("[data-mobile-panel]");
 const intro = document.querySelector(".brand-intro");
 
 const setHeader = () => {
-  header?.classList.toggle("is-scrolled", window.scrollY > 12);
+  const notchPoint = hero ? hero.offsetHeight - 96 : 12;
+  header?.classList.toggle("is-scrolled", window.scrollY > notchPoint);
 };
 setHeader();
 window.addEventListener("scroll", setHeader, { passive: true });
+window.addEventListener("resize", setHeader);
 
 const closeMenu = () => {
   document.body.classList.remove("menu-open");
