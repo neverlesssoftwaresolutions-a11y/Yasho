@@ -381,7 +381,9 @@ h1 .hero-outline {
   margin-top: 0;
   color: #c8691c;
   letter-spacing: .015em;
-  text-shadow: none;
+  -webkit-text-stroke: .45px rgba(255, 250, 240, .92);
+  text-stroke: .45px rgba(255, 250, 240, .92);
+  text-shadow: 0 0 5px rgba(255, 250, 240, .34), 0 0 14px rgba(255, 250, 240, .16);
 }
 h2 { font-size: clamp(2.25rem, 5vw, 5rem); max-width: 12ch; }
 h3 { font-family: Fraunces, serif; font-size: clamp(1.45rem, 2vw, 2rem); }
