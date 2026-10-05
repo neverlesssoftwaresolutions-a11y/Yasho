@@ -59,7 +59,7 @@ img { max-width: 100%; display: block; }
 }
 .intro-brand-frame {
   position: relative;
-  width: min(650px, 92vw);
+  width: min(780px, 94vw);
   opacity: 0;
   transform: translateY(14px) scale(.96);
   filter: blur(8px) drop-shadow(0 18px 44px rgba(78, 61, 38, .14));
@@ -114,7 +114,7 @@ img { max-width: 100%; display: block; }
 .steam-two { left: 27px; animation-delay: 1.34s; }
 .steam-three { left: 38px; animation-delay: 1.5s; }
 .loading-line {
-  width: min(520px, 84vw);
+  width: min(620px, 86vw);
   height: 6px;
   overflow: hidden;
   border-radius: 999px;
