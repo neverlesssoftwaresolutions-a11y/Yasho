@@ -1,3 +1,9 @@
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+window.scrollTo(0, 0);
+window.addEventListener("pageshow", () => window.scrollTo(0, 0));
+
 const header = document.querySelector("[data-header]");
 const hero = document.querySelector(".hero");
 const menuButton = document.querySelector("[data-menu-button]");
