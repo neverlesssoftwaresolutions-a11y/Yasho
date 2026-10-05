@@ -340,7 +340,7 @@ img { max-width: 100%; display: block; }
 }
 h1, h2, h3 { margin: 0; line-height: .98; letter-spacing: 0; }
 h1, h2 { font-family: Fraunces, serif; font-weight: 650; }
-h1 { font-size: clamp(3.8rem, 9vw, 9rem); max-width: 10ch; }
+h1 { font-size: clamp(3.05rem, 7vw, 6.9rem); line-height: .94; max-width: 12ch; }
 h1 > span { display: block; }
 h1 .hero-poppins,
 h1 .hero-playfair {
@@ -566,7 +566,7 @@ dd { margin: 0; color: var(--muted); }
 
 @media (max-width: 620px) {
   .brand span { display: none; }
-  h1 { font-size: clamp(3rem, 18vw, 5.5rem); }
+  h1 { font-size: clamp(2.65rem, 14vw, 4.7rem); }
   .hero { padding-top: 2.5rem; }
   .hero-actions { flex-direction: column; }
   .button { width: 100%; }
