@@ -323,10 +323,10 @@ img { max-width: 100%; display: block; }
 .hero::before {
   content: "";
   position: absolute;
-  inset: -16% -2% -14%;
+  inset: 0;
   z-index: -2;
   background: url("/assets/yasho-homepage-img.jpg") center top / cover no-repeat;
-  transform: translateY(86px) scale(1.03);
+  transform: translateY(96px);
   transform-origin: top center;
   pointer-events: none;
 }
