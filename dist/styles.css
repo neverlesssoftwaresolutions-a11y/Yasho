@@ -318,8 +318,17 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(21, 17, 13, .72) 0%, rgba(36, 31, 25, .48) 42%, rgba(36, 31, 25, .14) 100%),
-    linear-gradient(0deg, rgba(251, 248, 241, .2), rgba(251, 248, 241, 0) 32%),
-    url("/assets/yasho-homepage-img.jpg") center 48% / cover no-repeat;
+    linear-gradient(0deg, rgba(251, 248, 241, .2), rgba(251, 248, 241, 0) 32%);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -16% -2% -14%;
+  z-index: -2;
+  background: url("/assets/yasho-homepage-img.jpg") center top / cover no-repeat;
+  transform: translateY(86px) scale(1.03);
+  transform-origin: top center;
+  pointer-events: none;
 }
 .hero::after {
   content: "";
