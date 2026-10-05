@@ -379,10 +379,10 @@ h1 .hero-soft-brown {
 h1 .hero-outline {
   display: block;
   margin-top: 0;
-  color: #fffaf0;
+  color: #c8691c;
   letter-spacing: .015em;
-  -webkit-text-stroke: 2.6px #c8691c;
-  text-stroke: 2.6px #c8691c;
+  -webkit-text-stroke: 2.6px #fffaf0;
+  text-stroke: 2.6px #fffaf0;
   text-shadow: none;
 }
 h2 { font-size: clamp(2.25rem, 5vw, 5rem); max-width: 12ch; }
