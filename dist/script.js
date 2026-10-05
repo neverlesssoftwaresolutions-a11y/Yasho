@@ -10,6 +10,7 @@ const heroTitle = document.querySelector("[data-hero-title]");
 const menuButton = document.querySelector("[data-menu-button]");
 const mobilePanel = document.querySelector("[data-mobile-panel]");
 const intro = document.querySelector(".brand-intro");
+const artGallery = document.querySelector("[data-art-gallery]");
 let heroIntroComplete = false;
 
 const playHeroTitle = () => {
@@ -72,6 +73,38 @@ mobilePanel?.querySelectorAll("a").forEach((link) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeMenu();
 });
+
+if (artGallery) {
+  const slides = Array.from(artGallery.querySelectorAll(".gallery-slide"));
+  const previousButton = artGallery.querySelector("[data-gallery-prev]");
+  const nextButton = artGallery.querySelector("[data-gallery-next]");
+  let activeSlide = 0;
+  let galleryTimer;
+
+  const showSlide = (index) => {
+    if (!slides.length) return;
+    activeSlide = (index + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => {
+      slide.classList.toggle("is-active", slideIndex === activeSlide);
+    });
+  };
+
+  const queueGallery = () => {
+    window.clearInterval(galleryTimer);
+    galleryTimer = window.setInterval(() => showSlide(activeSlide + 1), 4200);
+  };
+
+  previousButton?.addEventListener("click", () => {
+    showSlide(activeSlide - 1);
+    queueGallery();
+  });
+  nextButton?.addEventListener("click", () => {
+    showSlide(activeSlide + 1);
+    queueGallery();
+  });
+  showSlide(0);
+  if (slides.length > 1) queueGallery();
+}
 
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   intro?.classList.add("is-hidden");

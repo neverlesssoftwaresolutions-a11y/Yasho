@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Noto+Sans+Devanagari:wght@500;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles.css?v=hero-bg-fill-2" />
+    <link rel="stylesheet" href="/styles.css?v=art-gallery-1" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -131,10 +131,20 @@
             The public reviews repeatedly mention ambience, polite staff, desserts, and coffee quality.
           </p>
         </div>
-        <div class="asset-panel reveal">
-          <div>
-            <strong>Owner photo needed</strong>
-            <p>Interior, signage, and counter photos will make this section unmistakably YASHO.</p>
+        <div class="asset-panel art-gallery reveal" data-art-gallery aria-label="YASHO art gallery">
+          <div class="gallery-track">
+            <figure class="gallery-slide is-active">
+              <img src="/assets/yasho-homepage-img.jpg" alt="YASHO storefront and coffee house seating" />
+              <figcaption>YASHO storefront</figcaption>
+            </figure>
+            <figure class="gallery-slide">
+              <img src="/assets/yasho-original-brand.jpg" alt="YASHO brand artwork" />
+              <figcaption>Brand detail</figcaption>
+            </figure>
+          </div>
+          <div class="gallery-controls" aria-label="Gallery controls">
+            <button class="gallery-nav" type="button" aria-label="Previous image" data-gallery-prev>&lsaquo;</button>
+            <button class="gallery-nav" type="button" aria-label="Next image" data-gallery-next>&rsaquo;</button>
           </div>
         </div>
       </section>
@@ -246,6 +256,6 @@
       </div>
     </footer>
 
-    <script src="/script.js?v=hero-revisit-1"></script>
+    <script src="/script.js?v=art-gallery-1"></script>
   </body>
 </html>
