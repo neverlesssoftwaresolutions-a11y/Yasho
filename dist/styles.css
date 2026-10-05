@@ -340,7 +340,13 @@ img { max-width: 100%; display: block; }
 }
 h1, h2, h3 { margin: 0; line-height: .98; letter-spacing: 0; }
 h1, h2 { font-family: Fraunces, serif; font-weight: 650; }
-h1 { font-size: clamp(3.05rem, 7vw, 6.9rem); line-height: .94; max-width: 12ch; }
+h1 {
+  display: grid;
+  gap: .04em;
+  font-size: clamp(3.05rem, 7vw, 6.9rem);
+  line-height: .9;
+  max-width: 12ch;
+}
 h1 > span { display: block; }
 h1 .hero-poppins,
 h1 .hero-playfair {
@@ -364,7 +370,7 @@ h1 .hero-soft-brown {
 }
 h1 .hero-outline {
   display: block;
-  margin-top: .22em;
+  margin-top: 0;
   color: transparent;
   letter-spacing: .015em;
   -webkit-text-stroke: 2.6px #c8691c;
