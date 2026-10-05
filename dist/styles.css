@@ -146,13 +146,13 @@ img { max-width: 100%; display: block; }
   left: 50%;
   z-index: 50;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: clamp(1rem, 3vw, 2rem);
-  width: fit-content;
+  gap: clamp(1.4rem, 3vw, 2.4rem);
+  width: min(980px, calc(100% - 2rem));
   max-width: calc(100% - 2rem);
   margin: 0;
-  padding: .62rem .72rem .62rem 1rem;
+  padding: .7rem .8rem .7rem 1rem;
   background: rgba(143, 62, 0, .94);
   backdrop-filter: blur(22px) saturate(1.08);
   border: 1px solid rgba(255, 250, 240, .28);
@@ -162,7 +162,7 @@ img { max-width: 100%; display: block; }
   transition: background .25s ease, box-shadow .25s ease, border-color .25s ease, padding .25s ease, width .25s ease;
 }
 .site-header.is-scrolled {
-  width: fit-content;
+  width: min(940px, calc(100% - 2rem));
   padding-top: .5rem;
   padding-bottom: .5rem;
   border-color: rgba(255, 250, 240, .32);
@@ -174,6 +174,7 @@ img { max-width: 100%; display: block; }
   align-items: center;
   gap: .8rem;
   min-width: 0;
+  white-space: nowrap;
 }
 .brand img {
   width: 38px;
@@ -200,19 +201,22 @@ img { max-width: 100%; display: block; }
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: .35rem;
+  justify-content: center;
+  gap: clamp(.35rem, 1.2vw, .8rem);
   color: #fffaf0;
   font-weight: 700;
   font-size: .9rem;
   padding: .25rem;
   border-radius: 999px;
   background: transparent;
+  white-space: nowrap;
 }
 .desktop-nav a { position: relative; }
 .desktop-nav a {
-  padding: .56rem .78rem;
+  padding: .58rem .82rem;
   border-radius: 999px;
   transition: background .25s ease, color .25s ease;
+  white-space: nowrap;
 }
 .desktop-nav a:hover {
   background: rgba(255, 250, 240, .16);
@@ -233,10 +237,11 @@ img { max-width: 100%; display: block; }
 .header-action, .button.primary { background: var(--brand-dark); color: #fffaf0; }
 .header-action {
   min-height: 40px;
-  padding-inline: 1rem;
+  padding-inline: 1.18rem;
   background: #fffaf0;
   color: #8f3e00;
   box-shadow: 0 8px 20px rgba(36, 31, 25, .16);
+  white-space: nowrap;
 }
 .header-action:hover { background: #f2eadb; color: #6f3100; transform: translateY(-1px); }
 .button.primary:hover { background: var(--ink); transform: translateY(-1px); }
