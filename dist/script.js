@@ -6,9 +6,23 @@ window.addEventListener("pageshow", () => window.scrollTo(0, 0));
 
 const header = document.querySelector("[data-header]");
 const hero = document.querySelector(".hero");
+const heroTitle = document.querySelector("[data-hero-title]");
 const menuButton = document.querySelector("[data-menu-button]");
 const mobilePanel = document.querySelector("[data-mobile-panel]");
 const intro = document.querySelector(".brand-intro");
+
+const playHeroTitle = () => {
+  if (!heroTitle) return;
+  heroTitle.classList.remove("is-ready");
+  void heroTitle.offsetWidth;
+  heroTitle.classList.add("is-ready");
+};
+
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) {
+    window.setTimeout(playHeroTitle, 160);
+  }
+});
 
 const setHeader = () => {
   const notchPoint = hero ? hero.offsetHeight - 96 : 12;
@@ -41,8 +55,10 @@ document.addEventListener("keydown", (event) => {
 
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   intro?.classList.add("is-hidden");
+  playHeroTitle();
 } else {
   window.setTimeout(() => intro?.classList.add("is-hidden"), 2750);
+  window.setTimeout(playHeroTitle, 3350);
 }
 
 const observer = new IntersectionObserver(
