@@ -13,6 +13,14 @@
   --radius: 8px;
 }
 
+@font-face {
+  font-family: "Yasho Baskervville";
+  src: url("/assets/fonts/Baskervville-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -348,13 +356,13 @@ h1 {
   max-width: 12ch;
 }
 h1 > span { display: block; }
-h1 .hero-poppins,
+h1 .hero-baskervville,
 h1 .hero-playfair {
   display: inline;
 }
-h1 .hero-poppins {
-  font-family: Poppins, sans-serif;
-  font-weight: 700;
+h1 .hero-baskervville {
+  font-family: "Yasho Baskervville", serif;
+  font-weight: 400;
 }
 h1 .hero-playfair {
   font-family: "Playfair Display", serif;
