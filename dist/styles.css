@@ -319,7 +319,7 @@ img { max-width: 100%; display: block; }
   background:
     linear-gradient(90deg, rgba(21, 17, 13, .72) 0%, rgba(36, 31, 25, .48) 42%, rgba(36, 31, 25, .14) 100%),
     linear-gradient(0deg, rgba(251, 248, 241, .2), rgba(251, 248, 241, 0) 32%),
-    url("/assets/yasho-homepage-img.jpg") center 32% / cover no-repeat;
+    url("/assets/yasho-homepage-img.jpg") center 48% / cover no-repeat;
 }
 .hero::after {
   content: "";
