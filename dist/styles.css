@@ -354,10 +354,21 @@ h1 .hero-playfair {
   font-family: "Playfair Display", serif;
   font-weight: 700;
 }
+h1 .hero-italic {
+  font-style: italic;
+}
 h1 .hero-soft-brown {
   display: inline;
   color: #c8691c;
   text-shadow: 0 2px 18px rgba(36, 31, 25, .28);
+}
+h1 .hero-outline {
+  display: block;
+  margin-top: .16em;
+  color: transparent;
+  -webkit-text-stroke: 1.7px rgba(255, 250, 240, .9);
+  text-stroke: 1.7px rgba(255, 250, 240, .9);
+  text-shadow: none;
 }
 h2 { font-size: clamp(2.25rem, 5vw, 5rem); max-width: 12ch; }
 h3 { font-family: Fraunces, serif; font-size: clamp(1.45rem, 2vw, 2rem); }
