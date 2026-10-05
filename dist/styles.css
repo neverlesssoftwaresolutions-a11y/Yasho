@@ -160,7 +160,7 @@ img { max-width: 100%; display: block; }
   width: min(980px, calc(100% - 2rem));
   max-width: calc(100% - 2rem);
   margin: 0;
-  padding: .7rem .8rem .7rem 1rem;
+  padding: .52rem .72rem .52rem .9rem;
   background: rgba(143, 62, 0, .94);
   backdrop-filter: blur(22px) saturate(1.08);
   border: 1px solid rgba(255, 250, 240, .28);
@@ -188,8 +188,8 @@ img { max-width: 100%; display: block; }
   white-space: nowrap;
 }
 .brand img {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid rgba(123, 102, 66, .28);
@@ -244,7 +244,7 @@ img { max-width: 100%; display: block; }
 }
 .desktop-nav a { position: relative; }
 .desktop-nav a {
-  padding: .58rem .82rem;
+  padding: .46rem .76rem;
   border-radius: 999px;
   transition: background .25s ease, color .25s ease;
   white-space: nowrap;
@@ -270,8 +270,8 @@ img { max-width: 100%; display: block; }
 }
 .header-action, .button.primary { background: var(--brand-dark); color: #fffaf0; }
 .header-action {
-  min-height: 40px;
-  padding-inline: 1.18rem;
+  min-height: 36px;
+  padding-inline: 1.08rem;
   background: #fffaf0;
   color: #8f3e00;
   box-shadow: 0 8px 20px rgba(36, 31, 25, .16);
@@ -319,7 +319,7 @@ img { max-width: 100%; display: block; }
   background:
     linear-gradient(90deg, rgba(21, 17, 13, .72) 0%, rgba(36, 31, 25, .48) 42%, rgba(36, 31, 25, .14) 100%),
     linear-gradient(0deg, rgba(251, 248, 241, .2), rgba(251, 248, 241, 0) 32%),
-    url("/assets/yasho-homepage-img.jpg") center center / cover no-repeat;
+    url("/assets/yasho-homepage-img.jpg") center 44% / cover no-repeat;
 }
 .hero::after {
   content: "";
