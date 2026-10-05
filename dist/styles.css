@@ -159,13 +159,15 @@ img { max-width: 100%; display: block; }
   border-radius: 999px;
   box-shadow: 0 18px 46px rgba(78, 61, 38, .24);
   transform: translateX(-50%);
-  transition: background .25s ease, box-shadow .25s ease, border-color .25s ease, padding .25s ease, width .25s ease;
+  transition: top .25s ease, background .25s ease, box-shadow .25s ease, border-color .25s ease, border-radius .25s ease, padding .25s ease, width .25s ease;
 }
 .site-header.is-scrolled {
-  width: min(940px, calc(100% - 2rem));
-  padding-top: .5rem;
-  padding-bottom: .5rem;
+  top: 0;
+  width: min(820px, calc(100% - 2rem));
+  padding: .48rem .68rem .52rem .9rem;
   border-color: rgba(255, 250, 240, .32);
+  border-top-color: transparent;
+  border-radius: 0 0 34px 34px;
   background: rgba(143, 62, 0, .97);
   box-shadow: 0 16px 38px rgba(78, 61, 38, .26);
 }
