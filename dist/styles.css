@@ -342,11 +342,6 @@ h1, h2, h3 { margin: 0; line-height: .98; letter-spacing: 0; }
 h1, h2 { font-family: Fraunces, serif; font-weight: 650; }
 h1 { font-size: clamp(3.8rem, 9vw, 9rem); max-width: 10ch; }
 h1 span { display: block; }
-h1 .hero-accent {
-  display: inline;
-  color: #8f3e00;
-  text-shadow: 0 2px 18px rgba(255, 250, 240, .18);
-}
 h2 { font-size: clamp(2.25rem, 5vw, 5rem); max-width: 12ch; }
 h3 { font-family: Fraunces, serif; font-size: clamp(1.45rem, 2vw, 2rem); }
 .lead {
