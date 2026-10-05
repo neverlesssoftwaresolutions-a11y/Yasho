@@ -344,7 +344,7 @@ h1 { font-size: clamp(3.8rem, 9vw, 9rem); max-width: 10ch; }
 h1 span { display: block; }
 h1 .hero-soft-brown {
   display: inline;
-  color: #b98a5b;
+  color: #c8691c;
   text-shadow: 0 2px 18px rgba(36, 31, 25, .28);
 }
 h2 { font-size: clamp(2.25rem, 5vw, 5rem); max-width: 12ch; }
