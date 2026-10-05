@@ -10,6 +10,7 @@ const heroTitle = document.querySelector("[data-hero-title]");
 const menuButton = document.querySelector("[data-menu-button]");
 const mobilePanel = document.querySelector("[data-mobile-panel]");
 const intro = document.querySelector(".brand-intro");
+let heroIntroComplete = false;
 
 const playHeroTitle = () => {
   if (!heroTitle) return;
@@ -18,11 +19,30 @@ const playHeroTitle = () => {
   heroTitle.classList.add("is-ready");
 };
 
+const resetHeroTitle = () => {
+  heroTitle?.classList.remove("is-ready");
+};
+
 window.addEventListener("pageshow", (event) => {
-  if (event.persisted) {
+  if (event.persisted && heroIntroComplete) {
     window.setTimeout(playHeroTitle, 160);
   }
 });
+
+if (hero && heroTitle) {
+  const heroTitleObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (!heroIntroComplete) return;
+      if (entry.isIntersecting) {
+        playHeroTitle();
+      } else {
+        resetHeroTitle();
+      }
+    },
+    { threshold: 0.42 }
+  );
+  heroTitleObserver.observe(hero);
+}
 
 const setHeader = () => {
   const notchPoint = hero ? hero.offsetHeight - 96 : 12;
@@ -55,10 +75,14 @@ document.addEventListener("keydown", (event) => {
 
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   intro?.classList.add("is-hidden");
+  heroIntroComplete = true;
   playHeroTitle();
 } else {
   window.setTimeout(() => intro?.classList.add("is-hidden"), 2750);
-  window.setTimeout(playHeroTitle, 3350);
+  window.setTimeout(() => {
+    heroIntroComplete = true;
+    playHeroTitle();
+  }, 3350);
 }
 
 const observer = new IntersectionObserver(
