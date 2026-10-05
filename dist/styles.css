@@ -381,6 +381,9 @@ h1 .hero-baskervville,
 h1 .hero-playfair {
   display: inline;
 }
+h1 .hero-line-text {
+  display: inline-block;
+}
 h1 .hero-baskervville {
   font-family: "Yasho Baskervville", serif;
   font-weight: 400;
