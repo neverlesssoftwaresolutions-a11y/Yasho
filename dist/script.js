@@ -12,7 +12,9 @@ const mobilePanel = document.querySelector("[data-mobile-panel]");
 const intro = document.querySelector(".brand-intro");
 const artGallery = document.querySelector("[data-art-gallery]");
 const spaceMotifs = document.querySelector("[data-space-motifs]");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let heroIntroComplete = false;
+let sectionScrollLocked = false;
 
 const playHeroTitle = () => {
   if (!heroTitle) return;
@@ -59,6 +61,70 @@ const closeMenu = () => {
   mobilePanel?.classList.remove("is-open");
   menuButton?.setAttribute("aria-expanded", "false");
 };
+
+const moveToSection = (target, updateHash = true) => {
+  if (!target) return;
+  sectionScrollLocked = true;
+  target.scrollIntoView({
+    behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+    block: "start"
+  });
+  closeMenu();
+
+  if (updateHash && target.id) {
+    history.pushState(null, "", `#${target.id}`);
+  }
+
+  window.setTimeout(() => {
+    sectionScrollLocked = false;
+  }, prefersReducedMotion.matches ? 80 : 1050);
+};
+
+document.querySelectorAll('a[href^="#"]:not(.skip-link)').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const target = document.querySelector(link.getAttribute("href"));
+    if (!target) return;
+    event.preventDefault();
+    moveToSection(target);
+  });
+});
+
+window.addEventListener(
+  "wheel",
+  (event) => {
+    if (!hero || !heroIntroComplete || event.deltaY <= 8) return;
+    const isInsideHero = window.scrollY < hero.offsetHeight * 0.48;
+    if (!isInsideHero) return;
+
+    event.preventDefault();
+    if (sectionScrollLocked) return;
+    moveToSection(document.querySelector("#space"), false);
+  },
+  { passive: false }
+);
+
+let heroTouchStartY = null;
+hero?.addEventListener(
+  "touchstart",
+  (event) => {
+    heroTouchStartY = event.touches[0]?.clientY ?? null;
+  },
+  { passive: true }
+);
+hero?.addEventListener(
+  "touchend",
+  (event) => {
+    if (heroTouchStartY === null || sectionScrollLocked || !heroIntroComplete) return;
+    const touchEndY = event.changedTouches[0]?.clientY ?? heroTouchStartY;
+    const swipedUp = heroTouchStartY - touchEndY > 52;
+    heroTouchStartY = null;
+    if (swipedUp && window.scrollY < hero.offsetHeight * 0.6) {
+      moveToSection(document.querySelector("#space"), false);
+    }
+  },
+  { passive: true }
+);
 
 menuButton?.addEventListener("click", () => {
   const isOpen = menuButton.getAttribute("aria-expanded") === "true";
@@ -128,7 +194,7 @@ if (spaceMotifs) {
   spaceMotifObserver.observe(spaceMotifs);
 }
 
-if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+if (prefersReducedMotion.matches) {
   intro?.classList.add("is-hidden");
   heroIntroComplete = true;
   playHeroTitle();
