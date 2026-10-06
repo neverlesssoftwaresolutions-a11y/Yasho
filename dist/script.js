@@ -131,9 +131,9 @@ window.addEventListener(
   "wheel",
   (event) => {
     if (!hero) return;
-    const heroIsVisible = hero.getBoundingClientRect().bottom > 56;
+    const isOnHomeScreen = window.scrollY < hero.offsetHeight * 0.6;
 
-    if (!heroIsVisible) {
+    if (!isOnHomeScreen) {
       cancelSectionScroll();
       return;
     }
