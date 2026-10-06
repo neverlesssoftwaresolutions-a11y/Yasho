@@ -93,12 +93,17 @@ document.querySelectorAll('a[href^="#"]:not(.skip-link)').forEach((link) => {
 window.addEventListener(
   "wheel",
   (event) => {
-    if (!hero || !heroIntroComplete || event.deltaY <= 8) return;
-    const isInsideHero = window.scrollY < hero.offsetHeight * 0.48;
-    if (!isInsideHero) return;
+    if (!hero || event.deltaY <= 0) return;
+    if (sectionScrollLocked) {
+      event.preventDefault();
+      return;
+    }
+
+    const heroIsVisible = hero.getBoundingClientRect().bottom > window.innerHeight * 0.08;
+    if (!heroIsVisible) return;
 
     event.preventDefault();
-    if (sectionScrollLocked) return;
+    if (!heroIntroComplete) return;
     moveToSection(document.querySelector("#space"), false);
   },
   { passive: false }
