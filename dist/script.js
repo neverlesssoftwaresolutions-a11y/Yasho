@@ -12,6 +12,7 @@ const mobilePanel = document.querySelector("[data-mobile-panel]");
 const intro = document.querySelector(".brand-intro");
 const artGallery = document.querySelector("[data-art-gallery]");
 const spaceMotifs = document.querySelector("[data-space-motifs]");
+const spaceHeading = document.querySelector("[data-space-heading]");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let heroIntroComplete = false;
 let heroScrollLocked = false;
@@ -243,6 +244,27 @@ if (spaceMotifs) {
   );
 
   spaceMotifObserver.observe(spaceMotifs);
+}
+
+if (spaceHeading) {
+  const replaySpaceHeading = () => {
+    spaceHeading.classList.remove("is-active");
+    void spaceHeading.offsetWidth;
+    spaceHeading.classList.add("is-active");
+  };
+
+  const spaceHeadingObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        replaySpaceHeading();
+      } else {
+        spaceHeading.classList.remove("is-active");
+      }
+    },
+    { threshold: 0.46, rootMargin: "0px 0px -6% 0px" }
+  );
+
+  spaceHeadingObserver.observe(spaceHeading);
 }
 
 if (prefersReducedMotion.matches) {
