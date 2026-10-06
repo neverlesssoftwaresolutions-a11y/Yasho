@@ -354,6 +354,20 @@ img { max-width: 100%; display: block; }
   letter-spacing: .16em;
   text-transform: uppercase;
 }
+.section .kicker {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  min-height: 32px;
+  padding: .48rem .78rem .44rem;
+  border: 1px solid rgba(255, 250, 240, .22);
+  border-radius: 999px;
+  background: #8f3e00;
+  color: #fffaf0;
+  line-height: 1;
+  letter-spacing: .12em;
+  box-shadow: 0 8px 22px rgba(83, 35, 0, .16);
+}
 h1, h2, h3 { margin: 0; line-height: .98; letter-spacing: 0; }
 h1, h2 { font-family: Fraunces, serif; font-weight: 650; }
 h1 {
