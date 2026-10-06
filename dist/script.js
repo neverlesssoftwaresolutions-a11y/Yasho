@@ -14,7 +14,9 @@ const artGallery = document.querySelector("[data-art-gallery]");
 const spaceMotifs = document.querySelector("[data-space-motifs]");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let heroIntroComplete = false;
-let sectionScrollLocked = false;
+let heroScrollLocked = false;
+let scrollAnimationFrame = 0;
+let savedScrollBehavior = "";
 
 const playHeroTitle = () => {
   if (!heroTitle) return;
@@ -62,22 +64,57 @@ const closeMenu = () => {
   menuButton?.setAttribute("aria-expanded", "false");
 };
 
-const moveToSection = (target, updateHash = true) => {
+const cancelSectionScroll = () => {
+  if (!scrollAnimationFrame) return;
+  window.cancelAnimationFrame(scrollAnimationFrame);
+  scrollAnimationFrame = 0;
+  document.documentElement.style.scrollBehavior = savedScrollBehavior;
+  heroScrollLocked = false;
+};
+
+const moveToSection = (target, updateHash = true, duration = 1180, lockHero = false) => {
   if (!target) return;
-  sectionScrollLocked = true;
-  target.scrollIntoView({
-    behavior: prefersReducedMotion.matches ? "auto" : "smooth",
-    block: "start"
-  });
+  cancelSectionScroll();
   closeMenu();
 
   if (updateHash && target.id) {
     history.pushState(null, "", `#${target.id}`);
   }
 
-  window.setTimeout(() => {
-    sectionScrollLocked = false;
-  }, prefersReducedMotion.matches ? 80 : 1050);
+  const startY = window.scrollY;
+  const headerOffset = target.id === "top" ? 0 : 56;
+  const targetY = Math.max(0, target.getBoundingClientRect().top + startY - headerOffset);
+  const distance = targetY - startY;
+
+  if (prefersReducedMotion.matches || Math.abs(distance) < 2) {
+    window.scrollTo(0, targetY);
+    heroScrollLocked = false;
+    return;
+  }
+
+  heroScrollLocked = lockHero;
+  savedScrollBehavior = document.documentElement.style.scrollBehavior;
+  document.documentElement.style.scrollBehavior = "auto";
+  const startedAt = performance.now();
+
+  const animateScroll = (now) => {
+    const progress = Math.min((now - startedAt) / duration, 1);
+    const eased = progress < .5
+      ? 4 * progress * progress * progress
+      : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+    window.scrollTo(0, startY + distance * eased);
+
+    if (progress < 1) {
+      scrollAnimationFrame = window.requestAnimationFrame(animateScroll);
+      return;
+    }
+
+    scrollAnimationFrame = 0;
+    document.documentElement.style.scrollBehavior = savedScrollBehavior;
+    heroScrollLocked = false;
+  };
+
+  scrollAnimationFrame = window.requestAnimationFrame(animateScroll);
 };
 
 document.querySelectorAll('a[href^="#"]:not(.skip-link)').forEach((link) => {
@@ -93,18 +130,27 @@ document.querySelectorAll('a[href^="#"]:not(.skip-link)').forEach((link) => {
 window.addEventListener(
   "wheel",
   (event) => {
-    if (!hero || event.deltaY <= 0) return;
-    if (sectionScrollLocked) {
+    if (!hero) return;
+    const heroIsVisible = hero.getBoundingClientRect().bottom > 56;
+
+    if (!heroIsVisible) {
+      cancelSectionScroll();
+      return;
+    }
+
+    if (event.deltaY <= 0) {
+      cancelSectionScroll();
+      return;
+    }
+
+    if (heroScrollLocked) {
       event.preventDefault();
       return;
     }
 
-    const heroIsVisible = hero.getBoundingClientRect().bottom > window.innerHeight * 0.08;
-    if (!heroIsVisible) return;
-
     event.preventDefault();
     if (!heroIntroComplete) return;
-    moveToSection(document.querySelector("#space"), false);
+    moveToSection(document.querySelector("#space"), false, 1450, true);
   },
   { passive: false }
 );
@@ -120,12 +166,12 @@ hero?.addEventListener(
 hero?.addEventListener(
   "touchend",
   (event) => {
-    if (heroTouchStartY === null || sectionScrollLocked || !heroIntroComplete) return;
+    if (heroTouchStartY === null || heroScrollLocked || !heroIntroComplete) return;
     const touchEndY = event.changedTouches[0]?.clientY ?? heroTouchStartY;
     const swipedUp = heroTouchStartY - touchEndY > 52;
     heroTouchStartY = null;
     if (swipedUp && window.scrollY < hero.offsetHeight * 0.6) {
-      moveToSection(document.querySelector("#space"), false);
+      moveToSection(document.querySelector("#space"), false, 1450, true);
     }
   },
   { passive: true }
