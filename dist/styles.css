@@ -21,6 +21,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Yasho Moralana";
+  src: url("/assets/fonts/Moralana-DEMO.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -377,15 +385,15 @@ h1 {
 .hero-title.is-ready .hero-line:nth-child(3) .hero-line-text {
   animation-delay: .36s;
 }
-h1 .hero-baskervville,
+h1 .hero-moralana,
 h1 .hero-playfair {
   display: inline;
 }
 h1 .hero-line-text {
   display: inline-block;
 }
-h1 .hero-baskervville {
-  font-family: "Yasho Baskervville", serif;
+h1 .hero-moralana {
+  font-family: "Yasho Moralana", serif;
   font-weight: 400;
 }
 h1 .hero-playfair {
@@ -427,6 +435,10 @@ h1 .hero-outline {
   }
 }
 h2 { font-size: clamp(2.25rem, 5vw, 5rem); max-width: 12ch; }
+.moralana-heading {
+  font-family: "Yasho Moralana", serif;
+  font-weight: 400;
+}
 h3 { font-family: Fraunces, serif; font-size: clamp(1.45rem, 2vw, 2rem); }
 .lead {
   max-width: 32rem;
