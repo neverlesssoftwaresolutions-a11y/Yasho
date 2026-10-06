@@ -529,6 +529,116 @@ h3 { font-family: Fraunces, serif; font-size: clamp(1.45rem, 2vw, 2rem); }
 .section { padding: clamp(4rem, 8vw, 8rem) clamp(1rem, 5vw, 5rem); border-bottom: 1px solid var(--line); }
 .split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(280px, .8fr); gap: clamp(2rem, 6vw, 5rem); align-items: center; }
 .section-copy p:not(.kicker), .section-heading p { max-width: 42rem; color: var(--muted); font-size: 1.06rem; }
+.space-motifs {
+  display: grid;
+  grid-template-columns: repeat(3, 74px);
+  gap: .72rem;
+  width: max-content;
+  margin-top: 1.7rem;
+}
+.coffee-motif {
+  display: grid;
+  place-items: center;
+  width: 74px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(143, 62, 0, .24);
+  border-radius: 8px;
+  background: rgba(255, 253, 248, .76);
+  color: #8f3e00;
+  opacity: 0;
+  transform: translateY(18px) scale(.94);
+  box-shadow: 0 10px 28px rgba(83, 35, 0, .08);
+  cursor: default;
+  transition: color .25s ease, background .25s ease, border-color .25s ease, transform .3s cubic-bezier(.16, 1, .3, 1), box-shadow .3s ease;
+}
+.coffee-motif svg {
+  width: 52px;
+  height: 52px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.space-motifs.is-active .coffee-motif {
+  animation: motifArrive .72s cubic-bezier(.16, 1, .3, 1) both;
+}
+.space-motifs.is-active .coffee-motif:nth-child(2) { animation-delay: .12s; }
+.space-motifs.is-active .coffee-motif:nth-child(3) { animation-delay: .24s; }
+.coffee-motif:hover,
+.coffee-motif:focus-visible {
+  color: #fffaf0;
+  background: #8f3e00;
+  border-color: #8f3e00;
+  opacity: 1;
+  animation: none;
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(83, 35, 0, .2);
+  outline: none;
+}
+.motif-steam path {
+  stroke-dasharray: 18;
+  stroke-dashoffset: 18;
+  opacity: 0;
+}
+.space-motifs.is-active .motif-steam path {
+  animation: motifSteamRise 1.2s ease-out .42s both;
+}
+.space-motifs.is-active .motif-steam path:nth-child(2) { animation-delay: .54s; }
+.space-motifs.is-active .motif-steam path:nth-child(3) { animation-delay: .66s; }
+.motif-cup:hover .motif-steam path,
+.motif-cup:focus-visible .motif-steam path {
+  animation: motifSteamRise .9s ease-out infinite;
+}
+.motif-cup:hover .motif-steam path:nth-child(2),
+.motif-cup:focus-visible .motif-steam path:nth-child(2) { animation-delay: .12s; }
+.motif-cup:hover .motif-steam path:nth-child(3),
+.motif-cup:focus-visible .motif-steam path:nth-child(3) { animation-delay: .24s; }
+.motif-stream {
+  stroke-dasharray: 8 5;
+  stroke-dashoffset: 24;
+}
+.space-motifs.is-active .motif-stream {
+  animation: pourFlow 1.25s linear .55s 2;
+}
+.motif-pour:hover .motif-stream,
+.motif-pour:focus-visible .motif-stream {
+  animation: pourFlow .7s linear infinite;
+}
+.motif-pour:hover .motif-kettle,
+.motif-pour:focus-visible .motif-kettle {
+  transform-origin: 36px 25px;
+  animation: kettleTilt .9s cubic-bezier(.16, 1, .3, 1) infinite alternate;
+}
+.space-motifs.is-active .motif-bean-one { animation: beanTurn 1.1s cubic-bezier(.16, 1, .3, 1) .52s both; transform-origin: 25px 31px; }
+.space-motifs.is-active .motif-bean-two { animation: beanTurn 1.1s cubic-bezier(.16, 1, .3, 1) .66s both reverse; transform-origin: 43px 36px; }
+.motif-beans:hover .motif-bean-one,
+.motif-beans:focus-visible .motif-bean-one { animation: beanHover .9s ease-in-out infinite alternate; transform-origin: 25px 31px; }
+.motif-beans:hover .motif-bean-two,
+.motif-beans:focus-visible .motif-bean-two { animation: beanHover .9s ease-in-out .16s infinite alternate-reverse; transform-origin: 43px 36px; }
+@keyframes motifArrive {
+  from { opacity: 0; transform: translateY(18px) scale(.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes motifSteamRise {
+  0% { opacity: 0; stroke-dashoffset: 18; transform: translateY(4px); }
+  35% { opacity: 1; }
+  100% { opacity: 0; stroke-dashoffset: 0; transform: translateY(-3px); }
+}
+@keyframes pourFlow {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes kettleTilt {
+  to { transform: rotate(4deg) translateY(1px); }
+}
+@keyframes beanTurn {
+  from { opacity: 0; transform: rotate(-18deg) scale(.82); }
+  to { opacity: 1; transform: rotate(0) scale(1); }
+}
+@keyframes beanHover {
+  to { transform: rotate(7deg) translateY(-2px); }
+}
 .asset-panel {
   min-height: 430px;
   position: relative;

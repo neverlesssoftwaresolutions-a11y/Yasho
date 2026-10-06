@@ -11,6 +11,7 @@ const menuButton = document.querySelector("[data-menu-button]");
 const mobilePanel = document.querySelector("[data-mobile-panel]");
 const intro = document.querySelector(".brand-intro");
 const artGallery = document.querySelector("[data-art-gallery]");
+const spaceMotifs = document.querySelector("[data-space-motifs]");
 let heroIntroComplete = false;
 
 const playHeroTitle = () => {
@@ -104,6 +105,27 @@ if (artGallery) {
   });
   showSlide(0);
   if (slides.length > 1) queueGallery();
+}
+
+if (spaceMotifs) {
+  const replaySpaceMotifs = () => {
+    spaceMotifs.classList.remove("is-active");
+    void spaceMotifs.offsetWidth;
+    spaceMotifs.classList.add("is-active");
+  };
+
+  const spaceMotifObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        replaySpaceMotifs();
+      } else {
+        spaceMotifs.classList.remove("is-active");
+      }
+    },
+    { threshold: 0.38 }
+  );
+
+  spaceMotifObserver.observe(spaceMotifs);
 }
 
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
