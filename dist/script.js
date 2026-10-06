@@ -19,6 +19,45 @@ let heroScrollLocked = false;
 let scrollAnimationFrame = 0;
 let savedScrollBehavior = "";
 
+const configureMotionProfile = () => {
+  const root = document.documentElement;
+  if (prefersReducedMotion.matches) {
+    root.dataset.motionProfile = "reduced";
+    return;
+  }
+
+  const frameIntervals = [];
+  let previousFrame = 0;
+
+  const sampleFrame = (timestamp) => {
+    if (previousFrame) frameIntervals.push(timestamp - previousFrame);
+    previousFrame = timestamp;
+
+    if (frameIntervals.length < 30) {
+      window.requestAnimationFrame(sampleFrame);
+      return;
+    }
+
+    const stableIntervals = frameIntervals.slice(5).sort((a, b) => a - b);
+    const medianInterval = stableIntervals[Math.floor(stableIntervals.length / 2)] || 16.67;
+    const measuredRate = Math.max(30, Math.min(165, Math.round(1000 / medianInterval)));
+    const commonRates = [40, 60, 75, 90, 100, 120, 144, 165];
+    const refreshRate = commonRates.reduce((closest, rate) =>
+      Math.abs(rate - measuredRate) < Math.abs(closest - measuredRate) ? rate : closest
+    );
+    const memory = navigator.deviceMemory || 8;
+    const cores = navigator.hardwareConcurrency || 8;
+    const useLiteMotion = refreshRate < 52 || memory <= 4 || cores <= 4;
+
+    root.dataset.refreshRate = String(refreshRate);
+    root.dataset.motionProfile = useLiteMotion ? "lite" : "full";
+  };
+
+  window.requestAnimationFrame(sampleFrame);
+};
+
+configureMotionProfile();
+
 const playHeroTitle = () => {
   if (!heroTitle) return;
   heroTitle.classList.remove("is-ready");
