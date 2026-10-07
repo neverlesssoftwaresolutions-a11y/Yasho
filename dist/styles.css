@@ -1075,11 +1075,13 @@ html[data-motion-profile="lite"] .coffee-motif {
   #space .art-gallery {
     grid-area: gallery;
     align-self: stretch;
-    width: calc(100% - 16px);
+    left: 50%;
+    width: 100vw;
     min-height: 0;
     height: clamp(300px, 82vw, 460px);
-    margin: 10px 8px 12px;
+    margin: 12px 0 14px -50vw;
     border-radius: clamp(26px, 8vw, 50px);
+    outline-offset: -2px;
   }
   #space .art-gallery::before {
     border-radius: clamp(18px, 6vw, 40px);
