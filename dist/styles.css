@@ -956,7 +956,53 @@ html[data-motion-profile="lite"] .coffee-motif {
 }
 
 @media (max-width: 620px) {
-  .brand span { display: none; }
+  .site-header {
+    width: min(340px, calc(100% - 2.5rem));
+    gap: .6rem;
+    padding: .35rem .45rem .35rem .65rem;
+  }
+  .site-header.is-scrolled {
+    width: min(300px, calc(100% - 3.25rem));
+    gap: .5rem;
+    padding: .24rem .4rem .28rem .58rem;
+  }
+  .site-header .brand { gap: .52rem; }
+  .site-header .brand img {
+    width: 30px;
+    height: 30px;
+  }
+  .site-header.is-scrolled .brand img {
+    width: 27px;
+    height: 27px;
+  }
+  .brand span {
+    display: block;
+    width: 72px;
+    height: 29px;
+    overflow: hidden;
+  }
+  .brand strong,
+  .site-header.is-scrolled .brand strong {
+    width: 72px;
+    height: 29px;
+    overflow: hidden;
+    background-image: url("/assets/yasho-loader-lockup.png?v=10");
+    background-repeat: no-repeat;
+    background-size: 178px 88px;
+    background-position: -53px -27px;
+    color: transparent;
+    font-size: 0;
+    filter: brightness(0) invert(1);
+  }
+  .brand em { display: none; }
+  .menu-button {
+    width: 36px;
+    height: 36px;
+  }
+  .site-header.is-scrolled .menu-button {
+    width: 32px;
+    height: 32px;
+  }
   h1 { font-size: clamp(2.5rem, 12.5vw, 4.35rem); }
   h2 { font-size: clamp(2.15rem, 11vw, 3.5rem); }
   .hero { padding-top: 7rem; padding-bottom: 3.5rem; }
@@ -1071,7 +1117,8 @@ html[data-motion-profile="lite"] .coffee-motif {
 
 @media (max-width: 380px) {
   h1 { font-size: clamp(2.3rem, 12vw, 3.2rem); }
-  .site-header { width: calc(100% - 1rem); }
+  .site-header { width: calc(100% - 2rem); }
+  .site-header.is-scrolled { width: calc(100% - 2.75rem); }
   .space-motifs { grid-template-columns: repeat(3, 66px); gap: .5rem; }
   .coffee-motif { width: 66px; }
   .coffee-motif svg { width: 46px; height: 46px; }
