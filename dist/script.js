@@ -26,6 +26,10 @@ const configureMotionProfile = () => {
     return;
   }
 
+  const memory = navigator.deviceMemory || 8;
+  const cores = navigator.hardwareConcurrency || 8;
+  root.dataset.motionProfile = memory <= 4 || cores <= 4 ? "lite" : "full";
+
   const frameIntervals = [];
   let previousFrame = 0;
 
@@ -33,7 +37,7 @@ const configureMotionProfile = () => {
     if (previousFrame) frameIntervals.push(timestamp - previousFrame);
     previousFrame = timestamp;
 
-    if (frameIntervals.length < 30) {
+    if (frameIntervals.length < 18) {
       window.requestAnimationFrame(sampleFrame);
       return;
     }
@@ -45,8 +49,6 @@ const configureMotionProfile = () => {
     const refreshRate = commonRates.reduce((closest, rate) =>
       Math.abs(rate - measuredRate) < Math.abs(closest - measuredRate) ? rate : closest
     );
-    const memory = navigator.deviceMemory || 8;
-    const cores = navigator.hardwareConcurrency || 8;
     const useLiteMotion = refreshRate < 52 || memory <= 4 || cores <= 4;
 
     root.dataset.refreshRate = String(refreshRate);
@@ -237,19 +239,34 @@ if (artGallery) {
   const previousButton = artGallery.querySelector("[data-gallery-prev]");
   const nextButton = artGallery.querySelector("[data-gallery-next]");
   let activeSlide = 0;
-  let galleryTimer;
+  let galleryTimer = 0;
+  let galleryVisible = false;
+
+  const loadSlide = (index) => {
+    const slide = slides[(index + slides.length) % slides.length];
+    const image = slide?.querySelector("img[data-src]");
+    if (!image) return;
+    image.src = image.dataset.src;
+    image.removeAttribute("data-src");
+  };
 
   const showSlide = (index) => {
     if (!slides.length) return;
     activeSlide = (index + slides.length) % slides.length;
+    loadSlide(activeSlide);
+    loadSlide(activeSlide + 1);
     slides.forEach((slide, slideIndex) => {
       slide.classList.toggle("is-active", slideIndex === activeSlide);
     });
   };
 
   const queueGallery = () => {
-    window.clearInterval(galleryTimer);
-    galleryTimer = window.setInterval(() => showSlide(activeSlide + 1), 4200);
+    window.clearTimeout(galleryTimer);
+    if (!galleryVisible || document.hidden || slides.length < 2) return;
+    galleryTimer = window.setTimeout(() => {
+      showSlide(activeSlide + 1);
+      queueGallery();
+    }, 4600);
   };
 
   previousButton?.addEventListener("click", () => {
@@ -260,8 +277,20 @@ if (artGallery) {
     showSlide(activeSlide + 1);
     queueGallery();
   });
-  showSlide(0);
-  if (slides.length > 1) queueGallery();
+  slides.forEach((slide, index) => slide.classList.toggle("is-active", index === 0));
+  const galleryObserver = new IntersectionObserver(
+    ([entry]) => {
+      galleryVisible = entry.isIntersecting;
+      if (galleryVisible) {
+        loadSlide(activeSlide);
+        loadSlide(activeSlide + 1);
+      }
+      queueGallery();
+    },
+    { rootMargin: "180px 0px", threshold: 0.08 }
+  );
+  galleryObserver.observe(artGallery);
+  document.addEventListener("visibilitychange", queueGallery);
 }
 
 if (spaceMotifs) {
@@ -311,11 +340,29 @@ if (prefersReducedMotion.matches) {
   heroIntroComplete = true;
   playHeroTitle();
 } else {
-  window.setTimeout(() => intro?.classList.add("is-hidden"), 2750);
-  window.setTimeout(() => {
-    heroIntroComplete = true;
-    playHeroTitle();
-  }, 3350);
+  const introStartedAt = performance.now();
+  let introFinished = false;
+  const finishIntro = () => {
+    if (introFinished) return;
+    introFinished = true;
+    const remaining = Math.max(0, 1450 - (performance.now() - introStartedAt));
+    window.setTimeout(() => {
+      intro?.classList.add("is-hidden");
+      window.setTimeout(() => {
+        heroIntroComplete = true;
+        playHeroTitle();
+      }, 430);
+    }, remaining);
+  };
+  const heroImage = new Image();
+  heroImage.src = "/assets/yasho-homepage-img.jpg?v=performance-1";
+  if (heroImage.complete) {
+    finishIntro();
+  } else {
+    heroImage.addEventListener("load", finishIntro, { once: true });
+    heroImage.addEventListener("error", finishIntro, { once: true });
+  }
+  window.setTimeout(finishIntro, 2100);
 }
 
 const observer = new IntersectionObserver(

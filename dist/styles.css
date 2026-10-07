@@ -86,7 +86,7 @@ main, section { min-width: 0; }
   background:
     radial-gradient(circle at 50% 42%, rgba(180, 149, 91, .1), transparent 36%),
     var(--paper);
-  transition: opacity .7s ease, visibility .7s ease;
+  transition: opacity .42s ease, visibility .42s ease;
 }
 .intro-inner {
   display: grid;
@@ -99,8 +99,8 @@ main, section { min-width: 0; }
   width: min(780px, 94vw);
   opacity: 0;
   transform: translateY(14px) scale(.96);
-  filter: blur(8px) drop-shadow(0 18px 44px rgba(78, 61, 38, .14));
-  animation: introBrand 1.65s cubic-bezier(.16, 1, .3, 1) forwards;
+  filter: blur(5px) drop-shadow(0 18px 44px rgba(78, 61, 38, .14));
+  animation: introBrand 1.05s cubic-bezier(.16, 1, .3, 1) forwards;
 }
 .intro-brand-image {
   width: 100%;
@@ -115,7 +115,7 @@ main, section { min-width: 0; }
   opacity: 0;
   margin-top: .1rem;
   transform: translateY(8px) scale(.88);
-  animation: cupReveal .85s ease 1.12s forwards;
+  animation: cupReveal .65s ease .58s forwards;
 }
 .coffee-cup svg {
   width: 100%;
@@ -132,10 +132,10 @@ main, section { min-width: 0; }
   stroke-linejoin: round;
   stroke-dasharray: 180;
   stroke-dashoffset: 180;
-  animation: drawCup 1.05s cubic-bezier(.16, 1, .3, 1) 1.12s forwards;
+  animation: drawCup .72s cubic-bezier(.16, 1, .3, 1) .58s forwards;
 }
-.cup-handle { animation-delay: 1.2s; }
-.cup-saucer { animation-delay: 1.32s; stroke: var(--accent); }
+.cup-handle { animation-delay: .64s; }
+.cup-saucer { animation-delay: .72s; stroke: var(--accent); }
 .steam {
   position: absolute;
   top: -5px;
@@ -145,11 +145,11 @@ main, section { min-width: 0; }
   background: linear-gradient(to top, transparent, var(--brand), transparent);
   opacity: 0;
   transform: translateY(8px);
-  animation: steamRise 1.55s ease-in-out 1.18s infinite;
+  animation: steamRise 1.25s ease-in-out .74s infinite;
 }
 .steam-one { left: 16px; }
-.steam-two { left: 27px; animation-delay: 1.34s; }
-.steam-three { left: 38px; animation-delay: 1.5s; }
+.steam-two { left: 27px; animation-delay: .86s; }
+.steam-three { left: 38px; animation-delay: .98s; }
 .loading-line {
   width: min(620px, 86vw);
   height: 6px;
@@ -165,7 +165,7 @@ main, section { min-width: 0; }
   border-radius: inherit;
   background: linear-gradient(90deg, var(--brand-dark), var(--accent), var(--brand-dark));
   transform: translateX(-102%);
-  animation: loadLine 1.85s cubic-bezier(.65, 0, .35, 1) .52s forwards;
+  animation: loadLine 1.05s cubic-bezier(.65, 0, .35, 1) .24s forwards;
 }
 @keyframes introBrand { to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
 @keyframes cupReveal { to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -348,7 +348,7 @@ main, section { min-width: 0; }
   background:
     linear-gradient(90deg, rgba(21, 17, 13, .72) 0%, rgba(36, 31, 25, .48) 42%, rgba(36, 31, 25, .14) 100%),
     linear-gradient(0deg, rgba(251, 248, 241, .2), rgba(251, 248, 241, 0) 32%),
-    url("/assets/yasho-homepage-img.jpg") center 44% / cover no-repeat;
+    url("/assets/yasho-homepage-img.jpg?v=performance-1") center 44% / cover no-repeat;
 }
 .hero::after {
   content: "";
@@ -738,6 +738,7 @@ h3 { font-family: Fraunces, serif; font-size: clamp(1.45rem, 2vw, 2rem); }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: #2f251d;
 }
 .gallery-slide::after {
   content: "";
