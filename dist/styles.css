@@ -963,15 +963,16 @@ html[data-motion-profile="lite"] .coffee-motif {
   .section { padding-top: 5.25rem; padding-bottom: 5.25rem; }
   #space.split {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
     grid-template-areas:
-      "kicker kicker"
-      "heading heading"
-      "gallery description"
+      "kicker gallery"
+      "heading gallery"
+      "description description"
       "motifs motifs";
-    align-content: start;
+    align-content: center;
+    align-items: start;
     column-gap: clamp(.85rem, 4vw, 1.25rem);
-    row-gap: 1.35rem;
+    row-gap: 1rem;
     padding-inline: max(1.15rem, env(safe-area-inset-left), env(safe-area-inset-right));
   }
   #space .section-copy {
@@ -982,20 +983,36 @@ html[data-motion-profile="lite"] .coffee-motif {
     transform: none;
     filter: none;
   }
-  #space .section-copy > .kicker { grid-area: kicker; margin-bottom: 0; }
-  #space .space-heading { grid-area: heading; margin-bottom: .3rem; }
+  #space .section-copy > .kicker {
+    grid-area: kicker;
+    align-self: end;
+    margin-bottom: 0;
+  }
+  #space .space-heading {
+    grid-area: heading;
+    align-self: start;
+    max-width: 100%;
+    margin: 0;
+    padding-top: .05em;
+    font-size: clamp(1.7rem, 7.4vw, 2.45rem);
+    line-height: 1.02;
+  }
   #space .art-gallery {
     grid-area: gallery;
+    align-self: center;
     width: calc(100% - 8px);
-    min-height: clamp(360px, 102vw, 470px);
-    margin: .45rem 8px 1rem 0;
+    min-height: 0;
+    height: clamp(180px, 52vw, 240px);
+    margin: 8px 8px 8px 0;
   }
   #space .space-description {
     grid-area: description;
-    align-self: center;
-    margin: .35rem 0 0;
-    font-size: clamp(.9rem, 3.7vw, 1rem);
-    line-height: 1.62;
+    width: min(100%, 38rem);
+    margin: 1.15rem auto 0;
+    padding-top: 1.15rem;
+    border-top: 1px solid rgba(143, 62, 0, .2);
+    font-size: clamp(.96rem, 3.8vw, 1.05rem);
+    line-height: 1.7;
     text-wrap: pretty;
   }
   #space .space-motifs {
