@@ -14,6 +14,7 @@ const artGallery = document.querySelector("[data-art-gallery]");
 const spaceMotifs = document.querySelector("[data-space-motifs]");
 const spaceHeading = document.querySelector("[data-space-heading]");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const desktopHeroScroll = window.matchMedia("(min-width: 901px) and (pointer: fine)");
 let heroIntroComplete = false;
 let heroScrollLocked = false;
 let scrollAnimationFrame = 0;
@@ -172,7 +173,7 @@ document.querySelectorAll('a[href^="#"]:not(.skip-link)').forEach((link) => {
 window.addEventListener(
   "wheel",
   (event) => {
-    if (!hero) return;
+    if (!hero || !desktopHeroScroll.matches) return;
     const isOnHomeScreen = window.scrollY < hero.offsetHeight * 0.6;
 
     if (!isOnHomeScreen) {
@@ -201,6 +202,7 @@ let heroTouchStartY = null;
 hero?.addEventListener(
   "touchstart",
   (event) => {
+    if (!desktopHeroScroll.matches) return;
     heroTouchStartY = event.touches[0]?.clientY ?? null;
   },
   { passive: true }
@@ -208,6 +210,7 @@ hero?.addEventListener(
 hero?.addEventListener(
   "touchend",
   (event) => {
+    if (!desktopHeroScroll.matches) return;
     if (heroTouchStartY === null || heroScrollLocked || !heroIntroComplete) return;
     const touchEndY = event.changedTouches[0]?.clientY ?? heroTouchStartY;
     const swipedUp = heroTouchStartY - touchEndY > 52;
@@ -340,29 +343,13 @@ if (prefersReducedMotion.matches) {
   heroIntroComplete = true;
   playHeroTitle();
 } else {
-  const introStartedAt = performance.now();
-  let introFinished = false;
-  const finishIntro = () => {
-    if (introFinished) return;
-    introFinished = true;
-    const remaining = Math.max(0, 1450 - (performance.now() - introStartedAt));
-    window.setTimeout(() => {
-      intro?.classList.add("is-hidden");
-      window.setTimeout(() => {
-        heroIntroComplete = true;
-        playHeroTitle();
-      }, 430);
-    }, remaining);
-  };
   const heroImage = new Image();
   heroImage.src = "/assets/yasho-homepage-img.jpg?v=performance-1";
-  if (heroImage.complete) {
-    finishIntro();
-  } else {
-    heroImage.addEventListener("load", finishIntro, { once: true });
-    heroImage.addEventListener("error", finishIntro, { once: true });
-  }
-  window.setTimeout(finishIntro, 2100);
+  window.setTimeout(() => intro?.classList.add("is-hidden"), 1980);
+  window.setTimeout(() => {
+    heroIntroComplete = true;
+    playHeroTitle();
+  }, 2400);
 }
 
 const observer = new IntersectionObserver(

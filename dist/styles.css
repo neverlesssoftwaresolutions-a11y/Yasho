@@ -589,6 +589,10 @@ h3 { font-family: Fraunces, serif; font-size: clamp(1.45rem, 2vw, 2rem); }
   gap: clamp(2rem, 6vw, 5rem);
   align-items: center;
 }
+#space .section-copy {
+  display: grid;
+  align-content: center;
+}
 .split,
 .section-heading,
 .menu-grid,
@@ -717,6 +721,22 @@ h3 { font-family: Fraunces, serif; font-size: clamp(1.45rem, 2vw, 2rem); }
   border-radius: var(--radius);
   background: var(--ink);
   box-shadow: var(--shadow);
+}
+.art-gallery {
+  outline: 1px solid rgba(143, 62, 0, .34);
+  outline-offset: 8px;
+  box-shadow:
+    0 0 0 1px rgba(255, 253, 248, .72),
+    0 24px 70px rgba(70, 52, 28, .16);
+}
+.art-gallery::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  z-index: 3;
+  border: 1px solid rgba(255, 250, 240, .46);
+  border-radius: 4px;
+  pointer-events: none;
 }
 .gallery-track {
   position: absolute;
@@ -941,6 +961,51 @@ html[data-motion-profile="lite"] .coffee-motif {
   h2 { font-size: clamp(2.15rem, 11vw, 3.5rem); }
   .hero { padding-top: 7rem; padding-bottom: 3.5rem; }
   .section { padding-top: 5.25rem; padding-bottom: 5.25rem; }
+  #space.split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "kicker kicker"
+      "heading heading"
+      "gallery description"
+      "motifs motifs";
+    align-content: start;
+    column-gap: clamp(.85rem, 4vw, 1.25rem);
+    row-gap: 1.35rem;
+    padding-inline: max(1.15rem, env(safe-area-inset-left), env(safe-area-inset-right));
+  }
+  #space .section-copy {
+    display: contents;
+  }
+  #space .section-copy.reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  #space .section-copy > .kicker { grid-area: kicker; margin-bottom: 0; }
+  #space .space-heading { grid-area: heading; margin-bottom: .3rem; }
+  #space .art-gallery {
+    grid-area: gallery;
+    width: calc(100% - 8px);
+    min-height: clamp(360px, 102vw, 470px);
+    margin: .45rem 8px 1rem 0;
+  }
+  #space .space-description {
+    grid-area: description;
+    align-self: center;
+    margin: .35rem 0 0;
+    font-size: clamp(.9rem, 3.7vw, 1rem);
+    line-height: 1.62;
+    text-wrap: pretty;
+  }
+  #space .space-motifs {
+    grid-area: motifs;
+    justify-self: center;
+    margin-top: .35rem;
+  }
+  #space .gallery-slide figcaption { display: none; }
+  #space .gallery-controls { right: .7rem; bottom: .7rem; gap: .35rem; }
+  #space .gallery-nav { width: 36px; height: 36px; font-size: 1.45rem; }
   .hero-actions { flex-direction: column; }
   .button { width: 100%; }
   .hero-visual { min-height: 360px; }
