@@ -10,6 +10,8 @@ const heroTitle = document.querySelector("[data-hero-title]");
 const menuButton = document.querySelector("[data-menu-button]");
 const mobilePanel = document.querySelector("[data-mobile-panel]");
 const intro = document.querySelector(".brand-intro");
+const introBrandFrame = intro?.querySelector(".intro-brand-frame");
+const heroBrandLockup = document.querySelector("[data-hero-lockup]");
 const artGallery = document.querySelector("[data-art-gallery]");
 const spaceMotifs = document.querySelector("[data-space-motifs]");
 const spaceHeading = document.querySelector("[data-space-heading]");
@@ -93,13 +95,23 @@ if (hero && heroTitle) {
   heroTitleObserver.observe(hero);
 }
 
-const setHeader = () => {
+let viewportMotionFrame = 0;
+const updateViewportMotion = () => {
+  viewportMotionFrame = 0;
   const notchPoint = hero ? hero.offsetHeight - 96 : 12;
   header?.classList.toggle("is-scrolled", window.scrollY > notchPoint);
+  if (!hero || prefersReducedMotion.matches) return;
+  const progress = Math.min(Math.max(window.scrollY / (hero.offsetHeight * .82), 0), 1);
+  document.documentElement.style.setProperty("--hero-shift", `${progress * -52}px`);
+  document.documentElement.style.setProperty("--hero-opacity", String(1 - progress * .72));
 };
-setHeader();
-window.addEventListener("scroll", setHeader, { passive: true });
-window.addEventListener("resize", setHeader);
+const queueViewportMotion = () => {
+  if (viewportMotionFrame) return;
+  viewportMotionFrame = window.requestAnimationFrame(updateViewportMotion);
+};
+updateViewportMotion();
+window.addEventListener("scroll", queueViewportMotion, { passive: true });
+window.addEventListener("resize", queueViewportMotion);
 
 const closeMenu = () => {
   document.body.classList.remove("menu-open");
@@ -112,6 +124,7 @@ const cancelSectionScroll = () => {
   window.cancelAnimationFrame(scrollAnimationFrame);
   scrollAnimationFrame = 0;
   document.documentElement.style.scrollBehavior = savedScrollBehavior;
+  document.body.classList.remove("is-section-scrolling");
   heroScrollLocked = false;
 };
 
@@ -125,8 +138,16 @@ const moveToSection = (target, updateHash = true, duration = 1180, lockHero = fa
   }
 
   const startY = window.scrollY;
-  const headerOffset = target.id === "top" ? 0 : 56;
-  const targetY = Math.max(0, target.getBoundingClientRect().top + startY - headerOffset);
+  const scrollAnchor = target.id === "space"
+    ? target.querySelector(".space-gallery-heading") || target
+    : target;
+  const anchorY = scrollAnchor.getBoundingClientRect().top + startY;
+  const getTargetY = () => {
+    if (target.id === "top") return 0;
+    const headerHeight = header?.getBoundingClientRect().height || 56;
+    return Math.max(0, anchorY - Math.ceil(headerHeight + 16));
+  };
+  const targetY = getTargetY();
   const distance = targetY - startY;
 
   if (prefersReducedMotion.matches || Math.abs(distance) < 2) {
@@ -136,6 +157,7 @@ const moveToSection = (target, updateHash = true, duration = 1180, lockHero = fa
   }
 
   heroScrollLocked = lockHero;
+  document.body.classList.add("is-section-scrolling");
   savedScrollBehavior = document.documentElement.style.scrollBehavior;
   document.documentElement.style.scrollBehavior = "auto";
   const startedAt = performance.now();
@@ -145,7 +167,8 @@ const moveToSection = (target, updateHash = true, duration = 1180, lockHero = fa
     const eased = progress < .5
       ? 4 * progress * progress * progress
       : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-    window.scrollTo(0, startY + distance * eased);
+    const liveDistance = getTargetY() - startY;
+    window.scrollTo(0, startY + liveDistance * eased);
 
     if (progress < 1) {
       scrollAnimationFrame = window.requestAnimationFrame(animateScroll);
@@ -154,6 +177,7 @@ const moveToSection = (target, updateHash = true, duration = 1180, lockHero = fa
 
     scrollAnimationFrame = 0;
     document.documentElement.style.scrollBehavior = savedScrollBehavior;
+    document.body.classList.remove("is-section-scrolling");
     heroScrollLocked = false;
   };
 
@@ -174,6 +198,11 @@ window.addEventListener(
   "wheel",
   (event) => {
     if (!hero || !desktopHeroScroll.matches) return;
+    if (heroScrollLocked) {
+      event.preventDefault();
+      return;
+    }
+
     const isOnHomeScreen = window.scrollY < hero.offsetHeight * 0.6;
 
     if (!isOnHomeScreen) {
@@ -183,11 +212,6 @@ window.addEventListener(
 
     if (event.deltaY <= 0) {
       cancelSectionScroll();
-      return;
-    }
-
-    if (heroScrollLocked) {
-      event.preventDefault();
       return;
     }
 
@@ -244,6 +268,7 @@ if (artGallery) {
   let activeSlide = 0;
   let galleryTimer = 0;
   let galleryVisible = false;
+  let galleryTouchStartX = null;
 
   const loadSlide = (index) => {
     const slide = slides[(index + slides.length) % slides.length];
@@ -259,7 +284,9 @@ if (artGallery) {
     loadSlide(activeSlide);
     loadSlide(activeSlide + 1);
     slides.forEach((slide, slideIndex) => {
-      slide.classList.toggle("is-active", slideIndex === activeSlide);
+      const isActive = slideIndex === activeSlide;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", String(!isActive));
     });
   };
 
@@ -269,7 +296,7 @@ if (artGallery) {
     galleryTimer = window.setTimeout(() => {
       showSlide(activeSlide + 1);
       queueGallery();
-    }, 4600);
+    }, 3000);
   };
 
   previousButton?.addEventListener("click", () => {
@@ -280,7 +307,29 @@ if (artGallery) {
     showSlide(activeSlide + 1);
     queueGallery();
   });
-  slides.forEach((slide, index) => slide.classList.toggle("is-active", index === 0));
+  artGallery.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    showSlide(activeSlide + (event.key === "ArrowRight" ? 1 : -1));
+    queueGallery();
+  });
+  artGallery.addEventListener("touchstart", (event) => {
+    galleryTouchStartX = event.touches[0]?.clientX ?? null;
+  }, { passive: true });
+  artGallery.addEventListener("touchend", (event) => {
+    if (galleryTouchStartX === null) return;
+    const touchEndX = event.changedTouches[0]?.clientX ?? galleryTouchStartX;
+    const distance = touchEndX - galleryTouchStartX;
+    galleryTouchStartX = null;
+    if (Math.abs(distance) < 48) return;
+    showSlide(activeSlide + (distance < 0 ? 1 : -1));
+    queueGallery();
+  }, { passive: true });
+  slides.forEach((slide, index) => {
+    const isActive = index === 0;
+    slide.classList.toggle("is-active", isActive);
+    slide.setAttribute("aria-hidden", String(!isActive));
+  });
   const galleryObserver = new IntersectionObserver(
     ([entry]) => {
       galleryVisible = entry.isIntersecting;
@@ -340,16 +389,51 @@ if (spaceHeading) {
 
 if (prefersReducedMotion.matches) {
   intro?.classList.add("is-hidden");
+  heroBrandLockup?.classList.add("is-visible");
   heroIntroComplete = true;
   playHeroTitle();
 } else {
   const heroImage = new Image();
-  heroImage.src = "/assets/yasho-homepage-img.jpg?v=performance-1";
-  window.setTimeout(() => intro?.classList.add("is-hidden"), 1980);
-  window.setTimeout(() => {
-    heroIntroComplete = true;
-    playHeroTitle();
-  }, 2400);
+  heroImage.src = "/assets/art-gallery/space_1.jpg?v=performance-1";
+  const settleBrandOnHero = () => {
+    if (!intro || !introBrandFrame || !heroBrandLockup || typeof introBrandFrame.animate !== "function") {
+      intro?.classList.add("is-hidden");
+      heroBrandLockup?.classList.add("is-visible");
+      heroIntroComplete = true;
+      playHeroTitle();
+      return;
+    }
+
+    const start = introBrandFrame.getBoundingClientRect();
+    const finish = heroBrandLockup.getBoundingClientRect();
+    const translateX = finish.left + finish.width / 2 - (start.left + start.width / 2);
+    const translateY = finish.top + finish.height / 2 - (start.top + start.height / 2);
+    const scale = finish.width / start.width;
+
+    intro.classList.add("is-transitioning");
+    const brandMotion = introBrandFrame.animate(
+      [
+        { transform: "translate3d(0, 0, 0) scale(1)", filter: "blur(0) drop-shadow(0 18px 44px rgba(78, 61, 38, .14))" },
+        { transform: `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`, filter: "blur(0) drop-shadow(0 0 1.15px rgba(255, 255, 255, 1)) drop-shadow(0 0 3px rgba(255, 253, 248, .78)) drop-shadow(0 0 8px rgba(255, 250, 240, .18)) drop-shadow(0 12px 26px rgba(20, 14, 9, .3))" }
+      ],
+      { duration: 2200, easing: "cubic-bezier(.16, 1, .3, 1)", fill: "forwards" }
+    );
+
+    brandMotion.finished.then(() => {
+      heroBrandLockup.classList.add("is-visible");
+      const handoff = introBrandFrame.animate(
+        [{ opacity: 1 }, { opacity: 0 }],
+        { duration: 320, easing: "ease-out", fill: "forwards" }
+      );
+      handoff.finished.then(() => {
+        intro.classList.add("is-hidden");
+        heroIntroComplete = true;
+        playHeroTitle();
+      });
+    });
+  };
+
+  window.setTimeout(settleBrandOnHero, 1450);
 }
 
 const observer = new IntersectionObserver(

@@ -9,14 +9,14 @@
       content="YASHO Coffee House in Rajarampuri, Kolhapur. Coffee, matcha, desserts, sandwiches, and easy conversations."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" as="image" href="/assets/yasho-homepage-img.jpg?v=performance-1" fetchpriority="high" />
+    <link rel="preload" as="image" href="/assets/art-gallery/space_1.jpg?v=performance-1" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Noto+Sans+Devanagari:wght@500;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles.css?v=mobile-gallery-full-1" />
+    <link rel="stylesheet" href="/styles.css?v=space-gallery-redesign-32" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -44,7 +44,7 @@
     <div class="brand-intro" aria-hidden="true">
       <div class="intro-inner">
         <div class="intro-brand-frame">
-          <img class="intro-brand-image" src="/assets/yasho-loader-lockup.png?v=10" alt="" width="1540" height="760" fetchpriority="high" />
+          <img class="intro-brand-image" src="/assets/yasho-lockup-clean-v1.png?v=1" alt="" width="1785" height="881" fetchpriority="high" />
         </div>
         <div class="loading-line"><span></span></div>
         <div class="coffee-cup" aria-hidden="true">
@@ -70,8 +70,13 @@
       </a>
       <nav class="desktop-nav" aria-label="Primary">
         <a href="#space">Our Space</a>
-        <a href="#menu">Coffee & Bites</a>
-        <a href="#gallery">Gallery</a>
+        <a href="#menu" hidden>Coffee & Bites</a>
+        <a href="#gallery" hidden>Gallery</a>
+        <a href="#visit">Visit Us</a>
+      </nav>
+      <nav class="mobile-nav" aria-label="Mobile primary">
+        <a href="#top">Home</a>
+        <a href="#space">Our Space</a>
         <a href="#visit">Visit Us</a>
       </nav>
       <a class="header-action" href="https://maps.app.goo.gl/ru7LbrC9cCMYLWU17" target="_blank" rel="noreferrer">Get Directions</a>
@@ -83,8 +88,8 @@
     <div class="mobile-panel" data-mobile-panel>
       <nav aria-label="Mobile primary">
         <a href="#space">Our Space</a>
-        <a href="#menu">Coffee & Bites</a>
-        <a href="#gallery">Gallery</a>
+        <a href="#menu" hidden>Coffee & Bites</a>
+        <a href="#gallery" hidden>Gallery</a>
         <a href="#visit">Visit Us</a>
         <a href="https://maps.app.goo.gl/ru7LbrC9cCMYLWU17" target="_blank" rel="noreferrer">Get Directions</a>
       </nav>
@@ -92,22 +97,25 @@
 
     <main id="main">
       <section class="hero" id="top">
+        <div class="hero-brand-lockup" data-hero-lockup>
+          <img src="/assets/yasho-lockup-clean-v1.png?v=1" alt="YASHO — coffee, has its story" width="1785" height="881" />
+        </div>
+        <h1 class="hero-title hero-corner-title" data-hero-title>
+          <span class="hero-line">
+            <span class="hero-line-text"><span class="hero-moralana">Fresh</span> <span class="hero-playfair hero-soft-brown hero-italic hero-glow-edge">Coffee,</span></span>
+          </span>
+          <span class="hero-line">
+            <span class="hero-line-text hero-moralana">For Lasting</span>
+          </span>
+          <span class="hero-line">
+            <span class="hero-line-text hero-playfair hero-italic hero-outline hero-glow-edge">Memories.</span>
+          </span>
+        </h1>
         <div class="hero-copy reveal">
           <p class="kicker">Rajarampuri · Kolhapur</p>
-          <h1 class="hero-title" data-hero-title>
-            <span class="hero-line">
-              <span class="hero-line-text"><span class="hero-moralana">Fresh</span> <span class="hero-playfair hero-soft-brown hero-italic hero-glow-edge">Coffee,</span></span>
-            </span>
-            <span class="hero-line">
-              <span class="hero-line-text hero-moralana">For Lasting</span>
-            </span>
-            <span class="hero-line">
-              <span class="hero-line-text hero-playfair hero-italic hero-outline hero-glow-edge">Memories.</span>
-            </span>
-          </h1>
           <p class="lead">Coffee, matcha, desserts, and easy conversations on Senapati Bapat Road.</p>
           <div class="hero-actions">
-            <a class="button primary" href="#menu">Explore Coffee & Bites</a>
+            <a class="button primary" href="#menu" hidden>Explore Coffee & Bites</a>
             <a class="button ghost" href="#visit">Visit YASHO</a>
           </div>
         </div>
@@ -123,84 +131,50 @@
         </div>
       </section>
 
-      <section class="section split" id="space">
-        <div class="section-copy reveal">
+      <section class="section space-gallery-section" id="space">
+        <div class="space-gallery-heading reveal">
           <p class="kicker">Our Space</p>
-          <h2 class="moralana-heading space-heading" data-space-heading><span>A calm corner for coffee, matcha, and conversations.</span></h2>
-          <p class="space-description">
-            YASHO is listed as a coffee shop in Rajarampuri with dine-in, drive-through, and no-contact delivery options.
-            The public reviews repeatedly mention ambience, polite staff, desserts, and coffee quality.
-          </p>
-          <div class="space-motifs" data-space-motifs aria-label="Coffee moments at YASHO">
-            <div class="coffee-motif motif-cup" role="img" tabindex="0" aria-label="A warm cup with rising steam" title="Warm coffee">
-              <svg viewBox="0 0 64 64" aria-hidden="true">
-                <g class="motif-steam">
-                  <path d="M24 24c-5-6 5-8 0-14" />
-                  <path d="M34 22c-5-6 5-8 0-14" />
-                  <path d="M44 24c-5-6 5-8 0-14" />
-                </g>
-                <path d="M15 29h34v11c0 9-7 15-17 15S15 49 15 40V29Z" />
-                <path d="M49 33h3a7 7 0 0 1 0 14h-6" />
-                <path d="M11 57h42" />
-              </svg>
-            </div>
-            <div class="coffee-motif motif-pour" role="img" tabindex="0" aria-label="Coffee pouring into a cup" title="Freshly poured">
-              <svg viewBox="0 0 64 64" aria-hidden="true">
-                <g class="motif-kettle">
-                  <path d="M10 12h22l4 15H14l-4-15Z" />
-                  <path d="M31 15c8 1 12 5 15 10" />
-                  <path d="M11 15C3 18 4 29 15 28" />
-                </g>
-                <path class="motif-stream" d="M45 25c4 7 0 12 0 18" />
-                <path d="M32 42h24v6c0 6-5 10-12 10s-12-4-12-10v-6Z" />
-                <path d="M56 45h2a4 4 0 0 1 0 8h-4" />
-              </svg>
-            </div>
-            <div class="coffee-motif motif-beans" role="img" tabindex="0" aria-label="A pair of roasted coffee beans" title="Roasted beans">
-              <svg viewBox="0 0 64 64" aria-hidden="true">
-                <g class="motif-bean motif-bean-one">
-                  <ellipse cx="25" cy="31" rx="13" ry="18" transform="rotate(-28 25 31)" />
-                  <path d="M21 15c8 8 10 20 7 33" />
-                </g>
-                <g class="motif-bean motif-bean-two">
-                  <ellipse cx="43" cy="36" rx="11" ry="16" transform="rotate(32 43 36)" />
-                  <path d="M47 22c-7 8-8 19-6 29" />
-                </g>
-              </svg>
-            </div>
-          </div>
+          <h2 class="space-gallery-title">
+            <span>Art Gallery</span>
+            <span class="space-gallery-arrow" aria-hidden="true">&darr;</span>
+          </h2>
         </div>
-        <div class="asset-panel art-gallery reveal" data-art-gallery aria-label="YASHO space gallery">
+        <div class="asset-panel art-gallery reveal" data-art-gallery aria-label="YASHO space gallery" aria-roledescription="carousel" tabindex="0">
           <div class="gallery-track">
-            <figure class="gallery-slide is-active">
+            <figure class="gallery-slide gallery-text-dark is-active">
               <img src="/assets/art-gallery/space_1.jpg?v=performance-1" alt="Wide view of the YASHO coffee house lounge" width="1600" height="901" loading="lazy" decoding="async" fetchpriority="low" />
-              <figcaption>The lounge</figcaption>
+              <blockquote class="gallery-quote">“Come for the coffee. Stay for the conversations.”</blockquote>
+              <figcaption><strong>The Lounge</strong><span>Curved seating, warm light, and an open room made for unhurried catch-ups.</span></figcaption>
             </figure>
-            <figure class="gallery-slide">
+            <figure class="gallery-slide gallery-text-light">
               <img data-src="/assets/art-gallery/space_2.jpg?v=performance-1" alt="YASHO seating area beside the dessert counter" width="1201" height="1600" loading="lazy" decoding="async" />
-              <figcaption>Coffee and desserts</figcaption>
+              <blockquote class="gallery-quote">“Good coffee makes room for good ideas.”</blockquote>
+              <figcaption><strong>Coffee &amp; Desserts</strong><span>A front-row seat to the counter, with something sweet always close by.</span></figcaption>
             </figure>
-            <figure class="gallery-slide">
+            <figure class="gallery-slide gallery-text-light">
               <img data-src="/assets/art-gallery/space_3.jpg?v=performance-1" alt="Leather lounge and group seating at YASHO" width="1600" height="901" loading="lazy" decoding="async" />
-              <figcaption>A quiet corner</figcaption>
+              <blockquote class="gallery-quote">“A quiet corner, a warm cup, and nowhere else to be.”</blockquote>
+              <figcaption><strong>Conversation Corner</strong><span>Soft leather seating and a little privacy for longer conversations.</span></figcaption>
             </figure>
-            <figure class="gallery-slide">
+            <figure class="gallery-slide gallery-text-light">
               <img data-src="/assets/art-gallery/space_4.jpg?v=performance-1" alt="Framed artwork above the lounge seating at YASHO" width="1600" height="1200" loading="lazy" decoding="async" />
-              <figcaption>Art and ambience</figcaption>
+              <blockquote class="gallery-quote">“Coffee tastes better where the room has a story.”</blockquote>
+              <figcaption><strong>Art &amp; Ambience</strong><span>Local character, deep wood tones, and gallery-inspired details.</span></figcaption>
             </figure>
-            <figure class="gallery-slide">
+            <figure class="gallery-slide gallery-text-light">
               <img data-src="/assets/art-gallery/space_5.jpg?v=performance-1" alt="Window counter seating overlooking the street at YASHO" width="1201" height="1600" loading="lazy" decoding="async" />
-              <figcaption>Window seating</figcaption>
+              <blockquote class="gallery-quote">“Some of the best pauses come with a view.”</blockquote>
+              <figcaption><strong>Window Counter</strong><span>Street-side seats for solo coffee, people-watching, or a slow afternoon.</span></figcaption>
             </figure>
           </div>
           <div class="gallery-controls" aria-label="Gallery controls">
-            <button class="gallery-nav" type="button" aria-label="Previous image" data-gallery-prev>&lsaquo;</button>
-            <button class="gallery-nav" type="button" aria-label="Next image" data-gallery-next>&rsaquo;</button>
+            <button class="gallery-nav" type="button" aria-label="Previous image" data-gallery-prev>&larr;</button>
+            <button class="gallery-nav" type="button" aria-label="Next image" data-gallery-next>&rarr;</button>
           </div>
         </div>
       </section>
 
-      <section class="section menu-section" id="menu">
+      <section class="section menu-section" id="menu" hidden>
         <div class="section-heading reveal">
           <p class="kicker">Coffee & Bites</p>
           <h2>Familiar favourites, presented with restraint.</h2>
@@ -240,7 +214,7 @@
         </div>
       </section>
 
-      <section class="section gallery-section" id="gallery">
+      <section class="section gallery-section" id="gallery" hidden>
         <div class="section-heading reveal">
           <p class="kicker">Gallery</p>
           <h2>Ready for YASHO’s real cafe moments.</h2>
@@ -254,7 +228,7 @@
         </div>
       </section>
 
-      <section class="section impressions">
+      <section class="section impressions" hidden>
         <div class="section-heading reveal">
           <p class="kicker">Guest Impressions</p>
           <h2>Warm words from the listing snapshot.</h2>
@@ -307,6 +281,6 @@
       </div>
     </footer>
 
-    <script src="/script.js?v=mobile-space-1"></script>
+    <script src="/script.js?v=space-gallery-redesign-12"></script>
   </body>
 </html>
